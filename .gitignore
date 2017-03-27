@@ -1,0 +1,5 @@
+
+/target/
+/web.iml
+/src/main/resources/application.properties
+/.idea/
