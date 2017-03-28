@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+	uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!----container---->
 <div class="container">
 	<!----top-header---->
@@ -36,12 +35,12 @@
 						 		Welcome  <security:authentication property="principal.username" />
 						</security:authorize> --%>
 
-						<!-- <security:authorize access="hasRole('supervisor')">
+						<%--<security:authorize access="hasRole('supervisor')">--%>
 
-								This content will only be visible to users who have
-								the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
+								<%--This content will only be visible to users who have--%>
+								<%--the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.--%>
 
-						</security:authorize> -->
+						<%--</security:authorize>--%>
 
 						<%-- <c:if test="${pageContext.request.userPrincipal.name != null}">
 							<h2>
@@ -68,7 +67,7 @@
 									
 								<ul class="unstyled-list list-inline">
 									<li><a class="login" href='<c:url value="#"></c:url>'>Welcome : ${pageContext.request.userPrincipal.name}</a></li>
-									<li><a class="btn btn-danger" href='<c:url value="logout"></c:url>'>Logout</a></li>
+									<li><a class="btn btn-danger" href='<c:url value=""></c:url>'>Logout</a></li>
 								</ul>
 							
 							
@@ -79,7 +78,7 @@
 									<ul class="unstyled-list list-inline">
 									<li><a class="btn btn-success" href='<c:url value="login"></c:url>'>Login</a></li>
 									<li><a class="btn btn-info"
-										href='<c:url value="register"></c:url>'>REGISTER <span>
+										href='<c:url value=""></c:url>'>REGISTER <span>
 										</span>
 									</a></li>
 								</ul>
@@ -125,7 +124,6 @@
 						Product</a><span> </span></li>
 				<li><a href="${pageContext.request.contextPath}/wonList">My Bid</a><span> </span></li>
 				<li><a href="myproduct">My Product</a></li>				
-				<div class="clearfix"></div>
 			</ul>
 			<a href="#" id="pull"><img src="images/nav-icon.png" title="menu" /></a>
 		</nav>
@@ -134,7 +132,7 @@
 		<div class="top-header-search-box">
 			<form name="search" action="searchItem" method="POST">
 				<input type="text" placeholder="Search" name="search"
-					required / maxlength="22"> <input type="submit" value="">
+					required maxlength="22"/> <input type="submit" value="" />
 			</form>
 		</div>
 		<!---top-header-search-box--->
