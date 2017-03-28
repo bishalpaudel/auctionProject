@@ -3,21 +3,28 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    <definition name="base.definition" template="/WEB-INF/views/template.jsp">
+    <definition name="frontbase.definition"
+                template="/WEB-INF/views/frontendtemplate.jsp">
         <put-attribute name="title" value="" />
-        <put-attribute name="pagecss" value="/WEB-INF/views/pagecss.jsp"
-                       cascade="true" />
-        <put-attribute name="header" value="/WEB-INF/views/header.jsp"
-                       cascade="true" />
-        <put-attribute name="sidebar" value="/WEB-INF/views/sidebar.jsp"
-                       cascade="true" />
+        <put-attribute name="resources"
+                       value="/WEB-INF/views/resources.jsp" cascade="true" />
+        <put-attribute name="header"
+                       value="/WEB-INF/views/frontendheader.jsp" cascade="true" />
         <put-attribute name="content" value="" />
-        <put-attribute name="pagescript" value="/WEB-INF/views/pagescript.jsp"
+        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"
                        cascade="true" />
     </definition>
-    <!-- admin tiles starts -->
-    <definition name="dashboard" extends="base.definition">
+
+    <definition name="home" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard" />
-        <put-attribute name="content" value="/WEB-INF/views/maincontent.jsp" />
+        <put-attribute name="content"
+                       value="/WEB-INF/views/content.jsp" />
+    </definition>
+
+
+    <definition name="homePagination" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="content"
+                       value="/WEB-INF/views/contentPagination.jsp" />
     </definition>
 </tiles-definitions>

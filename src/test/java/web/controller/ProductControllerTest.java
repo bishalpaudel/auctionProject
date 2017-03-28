@@ -24,6 +24,6 @@ public class ProductControllerTest {
 
     @Test
     public void homeTest(){
-        Assert.assertEquals(controller.home(), "homeView");
+        Assert.assertEquals(controller.home(), "home");
     }
 }

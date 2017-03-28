@@ -12,6 +12,6 @@ public class ProductController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
-        return "homeView";
+        return "home";
     }
 }

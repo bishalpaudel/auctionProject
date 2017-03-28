@@ -12,7 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
-
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 /**
  * Created by bishal on 3/13/17.
  */
@@ -21,14 +22,15 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 @ComponentScan(basePackages = "org.auctionproject.web")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public ViewResolver viewResolver(){
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
+//    @Bean
+//    public ViewResolver viewResolver(){
+//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//        viewResolver.setViewClass(JstlView.class);
+//        viewResolver.setPrefix("/WEB-INF/views/");
+//        viewResolver.setSuffix(".jsp");
+//        viewResolver.setOrder(1);
+//        return viewResolver;
+//    }
 
     @Bean
     public MessageSource messageSource() {
@@ -40,9 +42,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public TilesConfigurer tilesConfigurer(){
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
-        tilesConfigurer.setDefinitions(new String[]{"WEB-INF/**/tiles.xml"});
+        tilesConfigurer.setDefinitions(new String[]{"WEB-INF/tiles.xml"});
         tilesConfigurer.setCheckRefresh(true);
+        tilesConfigurer.setCompleteAutoload(true);
         return tilesConfigurer;
+    }
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        TilesViewResolver viewResolver = new TilesViewResolver();
+        viewResolver.setOrder(0);
+        registry.viewResolver(viewResolver);
     }
 
 //    @Override
