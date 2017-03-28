@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="base.definition" template="/WEB-INF/views/template.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="pagecss" value="/WEB-INF/views/pagecss.jsp"
+                       cascade="true" />
+        <put-attribute name="header" value="/WEB-INF/views/header.jsp"
+                       cascade="true" />
+        <put-attribute name="sidebar" value="/WEB-INF/views/sidebar.jsp"
+                       cascade="true" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="pagescript" value="/WEB-INF/views/pagescript.jsp"
+                       cascade="true" />
+    </definition>
+    <!-- admin tiles starts -->
+    <definition name="dashboard" extends="base.definition">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="content" value="/WEB-INF/views/maincontent.jsp" />
+    </definition>
+</tiles-definitions>
