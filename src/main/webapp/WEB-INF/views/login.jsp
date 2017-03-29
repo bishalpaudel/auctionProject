@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <!----content---->
 <div class="content">
 	<div class="container">
@@ -19,8 +20,9 @@
 							<br />
 						</div>
 					</c:if>
-					<form action="<spring:url value="/login"></spring:url>"
+					<form action="<spring:url value="/perform_login"></spring:url>"
 						method="post">
+						<input type="hidden" th:th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 						<fieldset>
 							<div class="form-group">
 								<input class="form-control form:input-large" placeholder="User Name"
