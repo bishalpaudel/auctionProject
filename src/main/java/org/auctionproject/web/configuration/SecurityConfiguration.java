@@ -18,9 +18,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.inMemoryAuthentication()
-                .withUser("username1")
-                .password("password")
-                .roles("USER");
+                .withUser("user").password("password").roles("USER")
+                .and()
+                .withUser("admin").password("password").roles("USER", "ADMIN");
     }
 
 //    @Override
@@ -30,30 +30,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-//        http.authorizeRequests()
-//                .antMatchers("/**").hasRole("ADMIN")
-//                .and()
-//                .formLogin()
-//                .loginPage("/homeView.jsp")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/");
-        http.authorizeRequests()
-                .antMatchers("/**")
-                    .hasRole("ADMIN")
+        http
+                .authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/dash").failureUrl("/login")
-//                    .usernameParameter("username").passwordParameter("password")
+                .formLogin()
+                /*.loginPage("/login")*/
                 .and()
-                    .logout()
-                    .logoutSuccessUrl("/");
-
-//                .anyRequest().authenticated()
-//                .and().formLogin().loginPage("/login").permitAll();
+                .httpBasic();
     }
 }

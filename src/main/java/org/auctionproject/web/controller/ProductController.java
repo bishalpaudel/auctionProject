@@ -14,15 +14,4 @@ public class ProductController {
     public String home(){
         return "home";
     }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(){
-        return "home";
-    }
-
-
-    @RequestMapping(value = "/dash", method = RequestMethod.GET)
-    public String dash(){
-        return "home";
-    }
 }

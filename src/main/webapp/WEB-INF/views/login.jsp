@@ -19,7 +19,7 @@
 							<br />
 						</div>
 					</c:if>
-					<form action="<spring:url value="/postLogin"></spring:url>"
+					<form action="<spring:url value="/login"></spring:url>"
 						method="post">
 						<fieldset>
 							<div class="form-group">

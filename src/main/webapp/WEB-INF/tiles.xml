@@ -5,26 +5,36 @@
 <tiles-definitions>
     <definition name="frontbase.definition"
                 template="/WEB-INF/views/frontendtemplate.jsp">
-        <put-attribute name="title" value="" />
+        <put-attribute name="title" value=""/>
         <put-attribute name="resources"
-                       value="/WEB-INF/views/resources.jsp" cascade="true" />
+                       value="/WEB-INF/views/resources.jsp" cascade="true"/>
         <put-attribute name="header"
-                       value="/WEB-INF/views/frontendheader.jsp" cascade="true" />
-        <put-attribute name="content" value="" />
+                       value="/WEB-INF/views/frontendheader.jsp" cascade="true"/>
+        <put-attribute name="content" value=""/>
         <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"
-                       cascade="true" />
+                       cascade="true"/>
     </definition>
 
     <definition name="home" extends="frontbase.definition">
-        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="title" value="Dashboard"/>
         <put-attribute name="content"
-                       value="/WEB-INF/views/content.jsp" />
+                       value="/WEB-INF/views/content.jsp"/>
     </definition>
 
 
     <definition name="homePagination" extends="frontbase.definition">
-        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="title" value="Dashboard"/>
         <put-attribute name="content"
-                       value="/WEB-INF/views/contentPagination.jsp" />
+                       value="/WEB-INF/views/contentPagination.jsp"/>
+    </definition>
+
+    <definition name="login" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard"/>
+        <put-attribute name="content" value="/WEB-INF/views/login.jsp"/>
+    </definition>
+    <definition name="register" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard"/>
+        <put-attribute name="content"
+                       value="/WEB-INF/views/register.jsp"/>
     </definition>
 </tiles-definitions>
