@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
+import javax.sql.DataSource;
+
 /**
  * Created by bishal on 3/28/17.
  */
@@ -18,17 +20,20 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    DataSource dataSource;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER")
-                .and()
-                .withUser("admin").password("password").roles("USER", "ADMIN");
+        auth
+                .jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("SELECT userName, password, id FROM USER_CREDENTIAL WHERE userName = ?")
+                .authoritiesByUsernameQuery("SELECT userName, role FROM USER_CREDENTIAL WHERE userName = ?");
+//                .inMemoryAuthentication()
+//                .withUser("user").password("password").roles("USER")
+//                .and()
+//                .withUser("admin").password("password").roles("USER", "ADMIN");
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -36,23 +41,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                   .csrf().csrfTokenRepository(csrfTokenRepository())
                   .and()
                   .authorizeRequests()
-                  .antMatchers("/login").permitAll()
-                  .antMatchers("/", "/home").access("hasRole('USER')")
+                    .antMatchers("/", "/login").permitAll()
+                    .antMatchers("/dashboard").hasAuthority("USER")
                   .and()
-                  .formLogin().loginPage("/getlogin").defaultSuccessUrl("/home").failureUrl("/getlogin")
+                  .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/dashboard")
                   .and()
-                  .logout().logoutSuccessUrl("/home");
-//                  .and().csrf().csrfTokenRepository(csrfTokenRepository());
-
-
-       /* http
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                *//*.loginPage("/login")*//*
-                .and()
-                .httpBasic();*/
+                  .logout()
+                    .logoutSuccessUrl("/home")
+                    .deleteCookies("JSESSIONID");
     }
 
 

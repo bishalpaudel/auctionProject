@@ -15,7 +15,9 @@
 						src="resource/frontend/images/img-w.jpg" title="name" /> <span><img
 						src="resource/frontend/images/obj1.png" title="name" /></span>
 					<h4>TOTAL</h4>
-					<label>357 PRODUCTS</label> <a class="r-list-w"
+
+					<label>357 PRODUCTS</label>
+					<a class="r-list-w"
 						href="single-page.html"><img
 						src="resource/frontend/images/list-icon.png" title="list" /></a>
 				</div>
@@ -44,7 +46,7 @@
 						src="resource/frontend/images/list-icon.png" title="list" /></a>
 				</div>
 			</div>
-			<vdi class="clearfix">
+            <div class="clearfix"></div>
 		</div>
 	</div>
 	<!---top-row--->
@@ -91,3 +93,4 @@
 		<!---//speical-products---->
 	</div>
 	<!----content---->
+</div>

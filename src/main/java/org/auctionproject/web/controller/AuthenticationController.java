@@ -18,10 +18,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class AuthenticationController {
 
-    @RequestMapping(value = "/getlogin", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         return "login";
     }
+
     @RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
     public String loginFailed(Model model) {
         model.addAttribute("error", "true");
