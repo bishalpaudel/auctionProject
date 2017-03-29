@@ -1,6 +1,6 @@
-package web.controller;
+package org.auctionProject.web.controller;
 
-import org.auctionproject.web.controller.ProductController;
+import org.auctionproject.web.controller.PageController;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.stereotype.Controller;
@@ -9,13 +9,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
- * Created by bishal on 3/27/17.
+ * Created by bishal on 3/29/17.
  */
 @Controller
-public class ProductControllerTest {
-
+public class PageControllerTest {
     @InjectMocks
-    ProductController controller;
+    PageController controller;
 
     @BeforeClass
     public void setup(){
@@ -26,4 +25,10 @@ public class ProductControllerTest {
     public void homeTest(){
         Assert.assertEquals(controller.home(), "home");
     }
+    @Test
+    public void dashboardTest(){
+        Assert.assertEquals(controller.dashboard(), "myProfile");
+    }
+
+
 }
