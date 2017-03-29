@@ -64,14 +64,26 @@
         <!----start-top-nav---->
         <nav class="top-nav main-menu">
             <ul class="top-nav">
-                <li><a href="${pageContext.request.contextPath}/home">Home </a><span> </span></li>
-                <li><a href="${pageContext.request.contextPath}/myproduct">My
-                    Product</a><span> </span></li>
-                <li><a href="${pageContext.request.contextPath}/wonList">My Bid</a><span> </span></li>
-                <li><a href="myproduct">My Product</a></li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/home">Home </a>
+                    <span> </span>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/myproduct">My Product</a>
+                    <span> </span>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/wonList">My Bid</a>
+                    <span> </span>
+                </li>
+                <li>
+                    <a href="myproduct">My Product</a>
+                </li>
 
                 <sec:authorize access="hasAuthority('USER')">
-                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li>
+                        <a href="/dashboard">Dashboard</a>
+                    </li>
                 </sec:authorize>
             </ul>
             <a href="#" id="pull"><img src="images/nav-icon.png" title="menu"/></a>
