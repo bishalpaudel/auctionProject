@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -13,15 +12,13 @@
 					<h3 class="panel-title">Please sign in</h3>
 				</div>
 				<div class="panel-body">
-					<c:if test="${not empty error}">
+                    <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
 						<div class="alert alert-danger">
-							<spring:message
-								code="AbstractUserDetailsAuthenticationProvider.badCredentials" />
+							<spring:message code="Login.AbstractUserDetailsAuthenticationProvider.badCredentials" />
 							<br />
 						</div>
 					</c:if>
-					<form action="<spring:url value="/login"></spring:url>"
-						method="post">
+					<form action="<spring:url value="/login"></spring:url>" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<fieldset>
 							<div class="form-group">
