@@ -1,32 +1,32 @@
 package org.auctionproject.web.service;
 
 import java.util.List;
+
+import org.auctionproject.web.dto.UserDTO;
+import org.auctionproject.web.model.Role;
 import org.auctionproject.web.model.User;
-import org.auctionproject.web.model.UserCredential;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserService {
 
-	// access database (get or set)
-
 	User getUserByUserId(Long id);
 
-	UserCredential getUserByUserName(String userName);
+//	UserCredential getUserByUserName(String userName);
 
-	User addUser(User newUser);
+	User addUser(UserDTO newUser, Role role) throws Exception;
 
-	// Login User validation
-	public Long loginValidation(UserCredential userCredit);
+//	public Long loginValidation(UserCredential userCredit);
 
-	User getUserByUserCredentialId(long id);
-
-	User getUserByUserCredentialUserName(String name);
-	// biijay
+//	User getUserByUserCredentialId(long id);
+//
+//	User getUserByUserCredentialUserName(String name);
 
 	List<User> findAll();
 
 	public void delete(long id);
 
-	public User getIdByUserName(String username);
+//	public User getIdByUserName(String username);
 
 
 }

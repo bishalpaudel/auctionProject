@@ -44,8 +44,8 @@
 			<h4>
 				<spring:message code="register.form.title" />
 			</h4>
-			<form:form modelAttribute="registerNewUser" method="post">
-				<%--enctype="multipart/form-data">--%>
+			<form:form modelAttribute="userDTO" method="post">
+				<%--&lt;%&ndash;enctype="multipart/form-data">&ndash;%&gt;--%>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<div class="form-group">
 					<form:errors path="*" class="form-error-new" />
@@ -86,10 +86,10 @@
 						<div class="input-group">
 							<span class="input-group-addon"><i
 								class="fa fa-user-circle" aria-hidden="true"></i></span>
-							<form:input path="userCredential.userName" class="form-control"
+							<form:input path="userName" class="form-control"
 								id="username" placeholder="Enter your Username" type="text" />
 						</div>
-						<form:errors path="userCredential.userName" class="form-error-new" />
+						<form:errors path="userName" class="form-error-new" />
 					</div>
 				</div>
 
@@ -100,17 +100,31 @@
 						<div class="input-group">
 							<span class="input-group-addon"><i
 								class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<form:input path="userCredential.password" class="form-control"
+							<form:input path="password" class="form-control"
 								id="password" placeholder="Enter your Password" type="password" />
 						</div>
-						<form:errors path="userCredential.password" class="form-error-new" />
+						<form:errors path="password" class="form-error-new" />
 					</div>
 				</div>
 
 				<div class="form-group">
-					<form:input path="userCredential.role" class="form-control"
-						id="role" value="ROLE_USER" type="hidden" />
+					<label for="repeatPassword" class="cols-sm-2 control-label"><spring:message
+							code="register.form.repeatPassword" /></label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i
+									class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+							<form:input path="repeatPassword" class="form-control"
+										id="repeatPassword" placeholder="Enter your Password again" type="password" />
+						</div>
+						<form:errors path="repeatPassword" class="form-error-new" />
+					</div>
 				</div>
+
+				<%--&lt;%&ndash;<div class="form-group">&ndash;%&gt;--%>
+					<%--&lt;%&ndash;<form:input path="userCredential.role" class="form-control"&ndash;%&gt;--%>
+						<%--&lt;%&ndash;id="role" value="ROLE_USER" type="hidden" />&ndash;%&gt;--%>
+				<%--&lt;%&ndash;</div>&ndash;%&gt;--%>
 
 				<div class="form-group">
 					<label for="phone" class="cols-sm-2 control-label"><spring:message
@@ -121,7 +135,7 @@
 								class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 							<form:input path="phone" class="form-control" id="phone"
 								placeholder="Enter your Phone" type="text" />
-							<%-- <form:errors path="phone" class="form-error-new"> --%>
+							 <form:errors path="phone" class="form-error-new" />
 						</div>
 					</div>
 				</div>

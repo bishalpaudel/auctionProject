@@ -1,6 +1,8 @@
 package org.auctionproject.web.controller;
 
+import org.auctionproject.web.dto.UserDTO;
 import org.auctionproject.web.model.User;
+import org.auctionproject.web.service.RoleService;
 import org.auctionproject.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,6 +36,9 @@ public class AuthenticationController {
     UserService userService;
 
     @Autowired
+    RoleService roleService;
+
+    @Autowired
     ServletContext servletContext;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -58,19 +63,23 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register(@ModelAttribute("registerNewUser") User newUser, Model model) {
+    public String register(@ModelAttribute("userDTO") UserDTO userDTO , Model model) {
+//        model.addAttribute("userDTO", userDTO);
         return "register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerNewUser(@Valid @ModelAttribute("registerNewUser") User newUser, BindingResult result
+    public String registerNewUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result
                                   /*@RequestParam(value = "picture", defaultValue = "") CommonsMultipartFile picture */, Model model)
-            throws FileNotFoundException {
+            throws Exception {
         if (result.hasErrors()) {
             return "register";
         }
-
-        newUser = userService.addUser(newUser);
+        try{
+            User newUser = userService.addUser(userDTO, roleService.getBasicRole());
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
 //
 //        MultipartFile userImage = picture;
 //        String separator = File.separator;
@@ -84,7 +93,7 @@ public class AuthenticationController {
 //                throw new FileNotFoundException("Unable to save image: " + userImage.getOriginalFilename());
 //            }
 //        }
-        return "redirect:/users";
+        return "redirect:/login";
     }
 
 }
