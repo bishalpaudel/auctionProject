@@ -43,7 +43,7 @@
                                 <ul class="unstyled-list list-inline">
                                     <li><a class="btn btn-success" href='<c:url value="/login"></c:url>'>Login</a></li>
                                     <li><a class="btn btn-info"
-                                           href='<c:url value=""></c:url>'>REGISTER <span>
+                                           href='<c:url value="register"></c:url>'>REGISTER <span>
                                                     </span>
                                     </a></li>
                                 </ul>

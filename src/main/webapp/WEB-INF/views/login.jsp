@@ -14,7 +14,7 @@
 				<div class="panel-body">
                     <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
 						<div class="alert alert-danger">
-							<spring:message code="Login.AbstractUserDetailsAuthenticationProvider.badCredentials" />
+							<spring:message code="login.form.badCredentials" />
 							<br />
 						</div>
 					</c:if>

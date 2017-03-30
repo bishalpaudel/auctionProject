@@ -46,13 +46,13 @@
 			</h4>
 			<form:form modelAttribute="registerNewUser" method="post"
 				enctype="multipart/form-data">
-
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<div class="form-group">
 					<form:errors path="*" class="form-error-new" />
 				</div>
 
 				<div class="form-group">
-					<label for="name" class="cols-sm-2 control-label"><spring:message
+					<label for="fullname" class="cols-sm-2 control-label"><spring:message
 							code="register.form.fullName" /></label>
 					<div class="cols-sm-10">
 						<div class="input-group">
@@ -198,7 +198,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="status" class="cols-sm-2 control-label"><spring:message
+					<label for="picture" class="cols-sm-2 control-label"><spring:message
 							code="register.form.profile" /></label>
 					<div class="cols-md-10">
 						<div class="input-group">

@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
           http
                   .csrf().csrfTokenRepository(csrfTokenRepository())
-                  .and()
+                 .and()
                   .authorizeRequests()
                     .antMatchers("/", "/login").permitAll()
                     .antMatchers("/my-profile").hasAuthority("USER")
