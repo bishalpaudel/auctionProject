@@ -63,29 +63,27 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerNewUser(@Valid @ModelAttribute("registerNewUser") User newUser, BindingResult result,
-                                  @RequestParam(value = "picture", defaultValue = "") CommonsMultipartFile
-
-                                          picture, Model model)
+    public String registerNewUser(@Valid @ModelAttribute("registerNewUser") User newUser, BindingResult result
+                                  /*@RequestParam(value = "picture", defaultValue = "") CommonsMultipartFile picture */, Model model)
             throws FileNotFoundException {
         if (result.hasErrors()) {
             return "register";
         }
 
         newUser = userService.addUser(newUser);
-
-        MultipartFile userImage = picture;
-        String separator = File.separator;
-
-        String rootDirectory = servletContext.getRealPath("/");
-        if (userImage != null && !userImage.isEmpty()) {
-            try {
-                userImage.transferTo(new File(rootDirectory + "resources" + separator + "img" + separator + "users_"
-                        + newUser.getUserId() + ".jpg"));
-            } catch (Exception e) {
-                throw new FileNotFoundException("Unable to save image: " + userImage.getOriginalFilename());
-            }
-        }
+//
+//        MultipartFile userImage = picture;
+//        String separator = File.separator;
+//
+//        String rootDirectory = servletContext.getRealPath("/");
+//        if (userImage != null && !userImage.isEmpty()) {
+//            try {
+//                userImage.transferTo(new File(rootDirectory + "resources" + separator + "img" + separator + "users_"
+//                        + newUser.getUserId() + ".jpg"));
+//            } catch (Exception e) {
+//                throw new FileNotFoundException("Unable to save image: " + userImage.getOriginalFilename());
+//            }
+//        }
         return "redirect:/users";
     }
 
