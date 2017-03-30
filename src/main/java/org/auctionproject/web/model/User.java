@@ -1,26 +1,33 @@
 package org.auctionproject.web.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.validation.Valid;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Entity(name = "USER")
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity(name = "users")
 public class User {
+	public static final int MAX_LENGTH_EMAIL_ADDRESS = 100;
+	public static final int MAX_LENGTH_FULLNAME = 50;
+	public static final int MAX_LENGTH_USERNAME = 15;
+	public static final int MAX_LENGTH_PASSWORD = 20;
+
+	public static final int MIN_LENGTH_USERNAME = 3;
+	public static final int MIN_LENGTH_PASSWORD = 6;
+	public static final int MIN_LENGTH_FULLNAME = 3;
+	public static final int MIN_LENGTH_PHONE = 10;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long userId;
+	private long id;
 
 	@NotEmpty
 	private String fullName;
+
 	@NotEmpty
 	@Email
 	private String email;
@@ -33,42 +40,43 @@ public class User {
 	private String street;
 	private String city;
 	private String state;
+
 	@NotEmpty
 	private String zip;
 	private String country;
-	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="USERCREDIT_ID")
-	@Valid
-	private UserCredential userCredential;
+
+	@ManyToMany(cascade = {CascadeType.MERGE})
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet(0);
+
 
 	public User() {
 		super();
 	}
+//
+//	public User(long userId, String fullName, String email, String userName, String password, String phone,
+//			String street, String city, String state, String zip, String country) {
+//		super();
+//		this.id = userId;
+//		this.fullName = fullName;
+//		this.email = email;
+//		this.userName = userName;
+//		this.password = password;
+//		this.phone = phone;
+//		this.street = street;
+//		this.city = city;
+//		this.state = state;
+//		this.zip = zip;
+//		this.country = country;
+//		//this.userCredential = userCredential;
+//	}
 
-	public User(long userId, String fullName, String email, String userName, String password, String phone,
-			String street, String city, String state, String zip, String country) {
-		super();
-		this.userId = userId;
-		this.fullName = fullName;
-		this.email = email;
-		this.userName = userName;
-		this.password = password;
-		this.phone = phone;
-		this.street = street;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.country = country;
-		//this.userCredential = userCredential;
+	public long getId() {
+		return id;
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setId(long userId) {
+		this.id = id;
 	}
 
 	public String getFullName() {
@@ -83,7 +91,7 @@ public class User {
 		return email;
 	}
 
-	public void setEmail(String email) {
+    public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -151,12 +159,22 @@ public class User {
 		this.country = country;
 	}
 
-	public UserCredential getUserCredential() {
-		return userCredential;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setUserCredential(UserCredential userCredential) {
-		this.userCredential = userCredential;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
+
+	public void addRole(Role role){
+        role.addUser(this);
+        roles.add(role);
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + fullName + ", Email: " + email;
+    }
 
 }
