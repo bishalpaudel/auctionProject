@@ -11,20 +11,13 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * Created by ravindra on 3/28/17.
@@ -72,6 +65,7 @@ public class AuthenticationController {
     public String registerNewUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result
                                   /*@RequestParam(value = "picture", defaultValue = "") CommonsMultipartFile picture */, Model model)
             throws Exception {
+
         if (result.hasErrors()) {
             return "register";
         }
@@ -80,20 +74,19 @@ public class AuthenticationController {
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }
-//
-//        MultipartFile userImage = picture;
-//        String separator = File.separator;
-//
-//        String rootDirectory = servletContext.getRealPath("/");
-//        if (userImage != null && !userImage.isEmpty()) {
-//            try {
-//                userImage.transferTo(new File(rootDirectory + "resources" + separator + "img" + separator + "users_"
-//                        + newUser.getUserId() + ".jpg"));
-//            } catch (Exception e) {
-//                throw new FileNotFoundException("Unable to save image: " + userImage.getOriginalFilename());
-//            }
-//        }
         return "redirect:/login";
     }
+
+
+//    @ExceptionHandler(UserAlreadyExistsException.class)
+//    public ModelAndView handleEmployeeNotFoundException(HttpServletRequest request, Exception ex){
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("exception", ex);
+//        modelAndView.addObject("url", request.getRequestURL());
+//
+//        modelAndView.setViewName("error");
+//        return modelAndView;
+//    }
 
 }
