@@ -7,6 +7,7 @@ import org.auctionproject.web.model.Role;
 import org.auctionproject.web.model.User;
 import org.auctionproject.web.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,18 +18,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 
+	BCryptPasswordEncoder passwordEncoder;
+
+	public UserServiceImpl(BCryptPasswordEncoder passwordEncoder){
+	    this.passwordEncoder = passwordEncoder;
+    }
 
 	@Override
     @Transactional(readOnly = true)
 	public User getUserByUserId(Long id) {
 		return userRepository.getUserById(id);
 	}
-
-//	@Override
-//	public UserCredential getUserByUserName(String userName) {
-//		return credentials.getUserByUserName(userName);
-//
-//	}
 
 	@Override
 	public User addUser(UserDTO userDTO, Role role) throws Exception {
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setFullName(userDTO.getFullName());
         user.setEmail(userDTO.getEmail());
         user.setUserName(userDTO.getUserName());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setPhone(userDTO.getPhone());
         user.setStreet(userDTO.getStreet());
         user.setCity(userDTO.getCity());
