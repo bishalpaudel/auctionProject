@@ -1,14 +1,20 @@
 package org.auctionproject.web.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-
 import javax.sql.DataSource;
 
 /**
@@ -23,21 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth
-                .jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT userName, password, id FROM USER WHERE userName = ?")
-                .authoritiesByUsernameQuery("SELECT u.userName, r.name " +
-                        "FROM users u " +
-                        "INNER JOIN user_role ur ON u.id=ur.user_id " +
-                        "INNER JOIN roles r ON r.id=ur.role_id " +
-                        "WHERE userName = ?");
-//                .inMemoryAuthentication()
-//                .withUser("user").password("password").roles("USER")
-//                .and()
-//                .withUser("admin").password("password").roles("USER", "ADMIN");
-    }
-
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -57,11 +49,42 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID");
     }
 
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService);
+        auth.authenticationProvider(authenticationProvider());
+        auth
+                .jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("SELECT userName, password, id FROM users WHERE userName = ?")
+                .authoritiesByUsernameQuery("SELECT u.userName, r.name " +
+                        "FROM users u " +
+                        "INNER JOIN user_role ur ON u.id=ur.user_id " +
+                        "INNER JOIN roles r ON r.id=ur.role_id " +
+                        "WHERE userName = ?");
+    }
 
-    private CsrfTokenRepository csrfTokenRepository()
-    {
+
+    private CsrfTokenRepository csrfTokenRepository(){
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
         repository.setSessionAttributeName("_csrf");
         return repository;
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
     }
 }
