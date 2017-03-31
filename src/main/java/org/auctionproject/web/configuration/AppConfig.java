@@ -5,14 +5,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+
+import java.util.Properties;
 
 /**
  * Created by bishal on 3/13/17.
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = "org.auctionproject.web")
 public class AppConfig extends WebMvcConfigurerAdapter {
+
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -31,10 +34,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean(name = "viewResolver")
     public ViewResolver getViewResolver() {
         UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
-
-        // TilesView 3
         viewResolver.setViewClass(TilesView.class);
-
         return viewResolver;
     }
 
@@ -43,9 +43,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer.setDefinitions(new String[]{"WEB-INF/tiles.xml"});
         tilesConfigurer.setCheckRefresh(true);
-        //tilesConfigurer.setCompleteAutoload(true);
         return tilesConfigurer;
     }
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         TilesViewResolver viewResolver = new TilesViewResolver();
@@ -59,20 +59,18 @@ public class AppConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations("/resources/");
     }
 
-//    @Bean(name = "multipartResolver")
-//    public CommonsMultipartResolver multipartResolver() {
-//        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-//        multipartResolver.setMaxUploadSize(100000);
-//        return new CommonsMultipartResolver();
-//    }
+    @Bean
+    HandlerExceptionResolver errorHandler () {
+        SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
 
-//    @Override
-//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//        configurer.enable();
-//    }
+        //exception to view name mapping
+//        Properties properties = new Properties();
+//        properties.setProperty(NullPointerException.class.getName(), "npeView");
+//        resolver.addStatusCode("npeView", 404);
 
-//    @Bean
-//    public MultipartResolver multipartResolver() {
-//        return new StandardServletMultipartResolver();
-//    }
+        resolver.setDefaultErrorView("defaultException");
+        resolver.setDefaultStatusCode(400);
+
+        return resolver;
+    }
 }

@@ -4,27 +4,27 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
     <definition name="frontbase.definition"
-                template="/WEB-INF/views/frontendtemplate.jsp">
+                template="/WEB-INF/views/templates/frontendtemplate.jsp">
         <put-attribute name="title" value=""/>
         <put-attribute name="resources"
                        value="/WEB-INF/views/resources.jsp" cascade="true"/>
         <put-attribute name="header"
-                       value="/WEB-INF/views/frontendheader.jsp" cascade="true"/>
+                       value="/WEB-INF/views/includes/header.jsp" cascade="true"/>
         <put-attribute name="content" value=""/>
-        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"
+        <put-attribute name="footer" value="/WEB-INF/views/includes/footer.jsp"
                        cascade="true"/>
     </definition>
 
     <definition name="home" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard"/>
         <put-attribute name="content"
-                       value="/WEB-INF/views/content.jsp"/>
+                       value="/WEB-INF/views/frontend/home/index.jsp"/>
     </definition>
 
     <definition name="myProfile" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard"/>
         <put-attribute name="content"
-                       value="/WEB-INF/views/myProfile.jsp"/>
+                       value="/WEB-INF/views/frontend/user/myProfile.jsp"/>
     </definition>
 
 
@@ -36,12 +36,29 @@
 
     <definition name="login" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard"/>
-        <put-attribute name="content" value="/WEB-INF/views/login.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/views/frontend/auth/login.jsp"/>
     </definition>
 
     <definition name="register" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard" />
         <put-attribute name="content"
-                       value="/WEB-INF/views/register.jsp" />
+                       value="/WEB-INF/views/frontend/auth/register.jsp" />
     </definition>
+
+    <definition name="error" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard"/>
+        <put-attribute name="content" value="/WEB-INF/views/exceptions/error.jsp"/>
+    </definition>
+
+    <definition name="databaseError" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard"/>
+        <put-attribute name="content" value="/WEB-INF/views/exceptions/databaseError.jsp"/>
+    </definition>
+
+    <definition name="defaultException" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard"/>
+        <put-attribute name="content" value="/WEB-INF/views/exceptions/default_exception.jsp"/>
+    </definition>
+
+
 </tiles-definitions>
