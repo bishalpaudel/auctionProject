@@ -45,6 +45,18 @@
                        value="/WEB-INF/views/frontend/auth/register.jsp" />
     </definition>
 
+    <definition name="resetPWEnterEmail" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="content"
+                       value="/WEB-INF/views/frontend/auth/PWResetEnterEmail.jsp" />
+    </definition>
+
+    <definition name="resetPW" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="content"
+                       value="/WEB-INF/views/frontend/auth/PWResetEnterPW.jsp" />
+    </definition>
+
     <definition name="error" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard"/>
         <put-attribute name="content" value="/WEB-INF/views/exceptions/error.jsp"/>
