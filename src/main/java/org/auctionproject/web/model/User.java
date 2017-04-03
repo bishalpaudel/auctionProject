@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "users")
+@Entity
 public class User {
 	public static final int MAX_LENGTH_EMAIL_ADDRESS = 100;
 	public static final int MAX_LENGTH_FULLNAME = 50;
@@ -46,37 +46,20 @@ public class User {
 	private String country;
 
 	@ManyToMany(cascade = {CascadeType.MERGE})
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet(0);
+	@JoinTable(name = "UserRole", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>(0);
 
 
 	public User() {
 		super();
 	}
-//
-//	public User(long userId, String fullName, String email, String userName, String password, String phone,
-//			String street, String city, String state, String zip, String country) {
-//		super();
-//		this.id = userId;
-//		this.fullName = fullName;
-//		this.email = email;
-//		this.userName = userName;
-//		this.password = password;
-//		this.phone = phone;
-//		this.street = street;
-//		this.city = city;
-//		this.state = state;
-//		this.zip = zip;
-//		this.country = country;
-//		//this.userCredential = userCredential;
-//	}
 
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long userId) {
-		this.id = id;
+		this.id = userId;
 	}
 
 	public String getFullName() {
