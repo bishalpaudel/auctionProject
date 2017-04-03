@@ -57,6 +57,18 @@
                        value="/WEB-INF/views/frontend/auth/PWResetEnterPW.jsp" />
     </definition>
 
+    <definition name="index" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="content"
+                       value="/WEB-INF/views/frontend/product/index.jsp" />
+    </definition>
+
+    <definition name="create" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="content"
+                       value="/WEB-INF/views/frontend/product/create.jsp" />
+    </definition>
+
     <definition name="error" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard"/>
         <put-attribute name="content" value="/WEB-INF/views/exceptions/error.jsp"/>
