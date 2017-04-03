@@ -68,8 +68,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 //        properties.setProperty(NullPointerException.class.getName(), "npeView");
 //        resolver.addStatusCode("npeView", 404);
 
-        resolver.setDefaultErrorView("defaultException");
-        resolver.setDefaultStatusCode(400);
+//        resolver.setDefaultErrorView("defaultException");
+//        resolver.setDefaultStatusCode(400);
 
         return resolver;
     }

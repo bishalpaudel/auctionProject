@@ -29,6 +29,8 @@ public class UserDTO {
     @Length(max = User.MAX_LENGTH_EMAIL_ADDRESS)
     private String email = "";
 
+    @NotNull
+    @NotEmpty
     @Length(min=User.MIN_LENGTH_PASSWORD, max=User.MAX_LENGTH_PASSWORD)
     private String password = "";
 
