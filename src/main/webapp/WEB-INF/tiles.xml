@@ -45,19 +45,29 @@
                        value="/WEB-INF/views/frontend/auth/register.jsp" />
     </definition>
 
+
+    <definition name="errorpage.definition"
+                template="/WEB-INF/views/templates/errortemplate.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="resources"
+                       value="/WEB-INF/views/resources.jsp" cascade="true"/>
+        <put-attribute name="content" value=""/>
+    </definition>
+
+
     <definition name="error" extends="frontbase.definition">
-        <put-attribute name="title" value="Dashboard"/>
+        <put-attribute name="title" value="Page Not Found"/>
         <put-attribute name="content" value="/WEB-INF/views/exceptions/error.jsp"/>
     </definition>
 
     <definition name="databaseError" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard"/>
-        <put-attribute name="content" value="/WEB-INF/views/exceptions/databaseError.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/views/exceptions/error.jsp"/>
     </definition>
 
     <definition name="defaultException" extends="frontbase.definition">
         <put-attribute name="title" value="Dashboard"/>
-        <put-attribute name="content" value="/WEB-INF/views/exceptions/default_exception.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/views/exceptions/error.jsp"/>
     </definition>
 
 

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -62,20 +65,21 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerNewUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result
-                                  /*@RequestParam(value = "picture", defaultValue = "") CommonsMultipartFile picture */, Model model)
+    public String registerNewUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult result,
+                                  @RequestParam(value = "picture", defaultValue = "") CommonsMultipartFile picture , RedirectAttributes redirectAttrs)
             throws Exception {
-
+        MultipartFile userImage = picture;
         if (result.hasErrors()) {
             return "register";
         }
         try{
-            User newUser = userService.addUser(userDTO, roleService.getBasicRole());
+            User newUser = userService.addUser(userDTO, roleService.getBasicRole(),userImage);
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }
         return "redirect:/login";
     }
+
 
 
 //    @ExceptionHandler(UserAlreadyExistsException.class)
@@ -87,6 +91,6 @@ public class AuthenticationController {
 //
 //        modelAndView.setViewName("error");
 //        return modelAndView;
-//    }
+//    };;s..
 
 }

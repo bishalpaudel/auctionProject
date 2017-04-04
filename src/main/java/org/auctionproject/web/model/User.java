@@ -45,6 +45,8 @@ public class User {
 	private String zip;
 	private String country;
 
+	private  String userImage;
+
 	@ManyToMany(cascade = {CascadeType.MERGE})
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet(0);
@@ -165,6 +167,14 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getUser_image() {
+		return userImage;
+	}
+
+	public void setUser_image(String user_image) {
+		this.userImage = user_image;
 	}
 
 	public void addRole(Role role){

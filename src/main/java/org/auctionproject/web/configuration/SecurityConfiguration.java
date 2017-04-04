@@ -34,8 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
           http
-                  .csrf().csrfTokenRepository(csrfTokenRepository())
-                 .and()
+                  /*TODO: ENABLE CSRF FOR FILE UPLOAD*/
+                  /*.csrf().csrfTokenRepository(csrfTokenRepository())*/
+                  .csrf().disable()
                   .authorizeRequests()
                     .antMatchers("/", "/login").permitAll()
                     .antMatchers("/my-profile").hasAuthority("USER")

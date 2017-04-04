@@ -44,9 +44,9 @@
 			<h4>
 				<spring:message code="register.form.title" />
 			</h4>
-			<form:form modelAttribute="userDTO" method="post">
+			<form:form modelAttribute="userDTO" enctype="multipart/form-data" method="post">
 				<%--&lt;%&ndash;enctype="multipart/form-data">&ndash;%&gt;--%>
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
 				<div class="form-group">
 					<form:errors path="*" class="form-error-new" />
 				</div>
@@ -211,16 +211,16 @@
 					</div>
 				</div>
 
-				<%--<div class="form-group">--%>
-					<%--<label for="picture" class="cols-sm-2 control-label"><spring:message--%>
-							<%--code="register.form.profile" /></label>--%>
-					<%--<div class="cols-md-10">--%>
-						<%--<div class="input-group">--%>
-							<%--<input type="file" name="picture" id="picture" accept="image/*" />--%>
-							<%--&lt;%&ndash; 	<form:errors path="status" class="form-error-new" /> &ndash;%&gt;--%>
-						<%--</div>--%>
-					<%--</div>--%>
-				<%--</div>--%>
+				<div class="form-group">
+					<label for="picture" class="cols-sm-2 control-label"><spring:message
+							code="register.form.profile" /></label>
+					<div class="cols-md-10">
+						<div class="input-group">
+							<input type="file" name="picture" id="picture" accept="image/*" />
+							 	<%--<form:errors path="status" class="form-error-new" />--%>
+						</div>
+					</div>
+				</div>
 
 				<div class="form-group ">
 					<input type="submit" name="register"

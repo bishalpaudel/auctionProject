@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * Created by bishal on 3/30/17.
  */
 
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler {
 
 //    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -24,12 +24,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SQLException.class)
     public String handleSQLException(HttpServletRequest request, Exception ex){
 //        logger.info("SQLException Occured:: URL="+request.getRequestURL());
-        return "databaseError";
+        return "dataBaseError";
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handleError404(HttpServletRequest request, Exception ex){
-        return "defaultException";
+        return "error";
     }
 
     @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="IOException occured")

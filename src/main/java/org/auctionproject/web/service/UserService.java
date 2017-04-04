@@ -7,6 +7,7 @@ import org.auctionproject.web.model.Role;
 import org.auctionproject.web.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -14,7 +15,7 @@ public interface UserService {
 
 //	UserCredential getUserByUserName(String userName);
 
-	User addUser(UserDTO newUser, Role role) throws Exception;
+	User addUser(UserDTO newUser, Role role, MultipartFile useFile) throws Exception;
 
 //	public Long loginValidation(UserCredential userCredit);
 

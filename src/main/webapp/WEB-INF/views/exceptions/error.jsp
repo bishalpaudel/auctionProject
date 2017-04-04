@@ -1,29 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isErrorPage="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
-<!----content---->
-<div class="content">
-    <div class="container">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Application Error, please contact support.</h3>
-                </div>
-                <div class="panel-body">
-                    <h3>Debug Information:</h3>
 
-                    Requested URL= ${url}<br><br>
+<%
+	response.setStatus(403);
+%>
 
-                    Exception= ${exception.message}<br><br>
 
-                    <strong>Exception Stack Trace</strong><br>
-                    <c:forEach items="${exception.stackTrace}" var="ste">
-                        ${ste}
-                    </c:forEach>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<center>
+
+		<img
+			src="<spring:url value="resource/images/error_page.png" htmlEscape="true" />"
+			alt="Page not found  JSP!!!" />
+
+		<%-- <H2>${requestScope['javax.servlet.error.message']}</H2> --%>
+
+		<p>
+			
+			<%-- <br/> Exception Type: ${exception} --%>
+			<%--<br /> Exception Type:${errorcode} ${exceptionClassSimpleName} --%>
+			<c:forEach items="${exception.stackTrace}" var="ste"> ${ste} 
+    </c:forEach>
+		</p>
+
+
+		
+	</center>
+	<div class="row">
+		<div class="col-lg-6 col-lg-offset-3">
+			<h1 class="error-title">${errorcode}</h1>
+			<h4 class="error-msg">
+				<i class="fa fa-warning text-red"></i> ${exceptionClassSimpleName}
+			</h4>
+			<p class="lead">The web server encountered an unexpected
+				condition that prevented it from fulfilling your request. Please try
+				again!!!</p>
+				<p class="lead">Failed URL: ${url}</p>
+			
+			<p>
+			<a class="btn btn-default" href="${pageContext.request.contextPath}/">Back to Home Page</a>
+		</p>
+			
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
