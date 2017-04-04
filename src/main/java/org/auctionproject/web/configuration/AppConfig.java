@@ -1,5 +1,6 @@
 package org.auctionproject.web.configuration;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -72,5 +73,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 //        resolver.setDefaultStatusCode(400);
 
         return resolver;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

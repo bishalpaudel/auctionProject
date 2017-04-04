@@ -23,4 +23,8 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getAllActiveProducts(Pageable pageRequest) {
         return productRepository.findAll(pageRequest);
     }
+
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
+    }
 }

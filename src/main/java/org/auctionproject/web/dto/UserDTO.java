@@ -5,7 +5,6 @@ import org.auctionproject.web.validation.ValidEmail;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Basic;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -13,8 +12,6 @@ import javax.validation.constraints.NotNull;
  */
 
 public class UserDTO {
-
-    private Long userId;
 
     @Length(min = User.MIN_LENGTH_USERNAME, max = User.MAX_LENGTH_USERNAME)
     private String userName = "";
@@ -54,15 +51,6 @@ public class UserDTO {
 
     /* TODO: add validation for country */
     private String country = "";
-
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getFullName() {
         return fullName;

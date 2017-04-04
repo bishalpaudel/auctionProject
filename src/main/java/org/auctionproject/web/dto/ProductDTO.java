@@ -1,82 +1,60 @@
-package org.auctionproject.web.model;
+package org.auctionproject.web.dto;
 
+import org.auctionproject.web.model.Category;
+import org.auctionproject.web.model.Product;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 /**
- * Created by Bishal Paudel on 3/2/17.
+ * Created by Bishal Paudel on 4/4/17.
  */
-@Entity
-public class Product {
+public class ProductDTO {
 
-    public static final int MIN_LENGTH_TITLE = 2;
-    public static final int MIN_LENGTH_MODEL = 2;
-    public static final int MIN_LENGTH_BRAND = 2;
-
-    public enum PRODUCTSTATUS {ACTIVE, SOLD, ARCHIVED}
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
-
-    @NotEmpty
+    @NotNull
+    @Length(min = Product.MIN_LENGTH_TITLE)
     private String title;
 
-    @NotEmpty
+    @Length(min = Product.MIN_LENGTH_MODEL)
     private String model;
 
-    @NotEmpty
+    @Length(min = Product.MIN_LENGTH_BRAND)
     private String brand;
 
+    /* TODO: validate if category exists in database */
+//    @NotNull
+//    private Category category;
 
-    @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.MERGE)
-    @JoinColumn(name="category_id")
-    private Category category;
-
-    @NotEmpty
     private String description;
 
     private Double directBuyPrice;
 
-    @NotEmpty
+    @DecimalMin("0.1")
+    @NotNull
     private Double initialBidAmount;
 
-    @NotEmpty
+    @DecimalMin("0.1")
+    @NotNull
     private Double minBidIncrementAmount;
 
-    @NotEmpty
-    @Temporal(value = TemporalType.DATE)
+    @Future
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date auctionStartDate;
 
-
-    @NotEmpty
-    @Temporal(value = TemporalType.DATE)
+    @Future
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date auctionEndDate;
 
-    @NotEmpty
-    private PRODUCTSTATUS status;
+    private Product.PRODUCTSTATUS status;
 
-    @OneToMany
-    @JoinColumn(
-            name = "product_id",
-            nullable = false
-    )
-    private List<Bid> bids = new ArrayList<>();
 
-    @ManyToOne
-    private User owner;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -102,13 +80,13 @@ public class Product {
         this.brand = brand;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
 
     public String getDescription() {
         return description;
@@ -118,6 +96,7 @@ public class Product {
         this.description = description;
     }
 
+
     public Double getDirectBuyPrice() {
         return directBuyPrice;
     }
@@ -125,6 +104,7 @@ public class Product {
     public void setDirectBuyPrice(Double directBuyPrice) {
         this.directBuyPrice = directBuyPrice;
     }
+
 
     public Double getInitialBidAmount() {
         return initialBidAmount;
@@ -158,28 +138,12 @@ public class Product {
         this.auctionEndDate = auctionEndDate;
     }
 
-    public PRODUCTSTATUS getStatus() {
+    public Product.PRODUCTSTATUS getStatus() {
         return status;
     }
 
-    public void setStatus(PRODUCTSTATUS status) {
+    public void setStatus(Product.PRODUCTSTATUS status) {
         this.status = status;
     }
 
-
-    public List<Bid> getBids() {
-        return bids;
-    }
-
-    public void setBids(List<Bid> bids) {
-        this.bids = bids;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-}
+ }
