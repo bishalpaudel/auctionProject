@@ -5,10 +5,9 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * Created by bishal on 3/30/17.
+ * Created by Bishal Paudel on 3/30/17.
  */
 @Entity
-@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

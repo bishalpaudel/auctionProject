@@ -9,6 +9,7 @@ import org.auctionproject.web.model.Role;
 import org.auctionproject.web.model.User;
 import org.auctionproject.web.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,17 +26,19 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ServletContext servletContext;
 
+
+    BCryptPasswordEncoder passwordEncoder;
+
+
+	public UserServiceImpl(BCryptPasswordEncoder passwordEncoder){
+	    this.passwordEncoder = passwordEncoder;
+    }
+
 	@Override
     @Transactional(readOnly = true)
 	public User getUserByUserId(Long id) {
 		return userRepository.getUserById(id);
 	}
-
-//	@Override
-//	public UserCredential getUserByUserName(String userName) {
-//		return credentials.getUserByUserName(userName);
-//
-//	}
 
 	@Override
 	public User addUser(UserDTO userDTO, Role role, MultipartFile userImage) throws Exception {
@@ -61,7 +64,7 @@ public class UserServiceImpl implements UserService {
         user.setFullName(userDTO.getFullName());
         user.setEmail(userDTO.getEmail());
         user.setUserName(userDTO.getUserName());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setPhone(userDTO.getPhone());
         user.setStreet(userDTO.getStreet());
         user.setCity(userDTO.getCity());
@@ -134,6 +137,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(long id) {
 		userRepository.delete(id);
-		
 	}
+
+    @Override
+    public boolean hasEmail(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
 }

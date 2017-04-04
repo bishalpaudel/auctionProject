@@ -65,8 +65,15 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     HandlerExceptionResolver errorHandler () {
         SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
-        resolver.setDefaultErrorView("defaultException");
-        resolver.setDefaultStatusCode(400);
+
+        //exception to view name mapping
+//        Properties properties = new Properties();
+//        properties.setProperty(NullPointerException.class.getName(), "npeView");
+//        resolver.addStatusCode("npeView", 404);
+
+//        resolver.setDefaultErrorView("defaultException");
+//        resolver.setDefaultStatusCode(400);
+
         return resolver;
     }
 

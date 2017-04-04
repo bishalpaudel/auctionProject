@@ -80,17 +80,43 @@ public class AuthenticationController {
         return "redirect:/login";
     }
 
+    @RequestMapping(value = "/reset-pw-email", method = RequestMethod.GET)
+    public String getResetPWEmail(@ModelAttribute("PWResetEmailDTO") PWResetEmailDTO dto){
+        return "resetPWEnterEmail";
+    }
 
+    @RequestMapping(value = "/reset-pw-email", method = RequestMethod.POST)
+    public String postResetPWEmail(@Valid @ModelAttribute("PWResetEmailDTO") PWResetEmailDTO dto,
+                              BindingResult result,
+                              Model model){
+        if (result.hasErrors()) {
+            return "resetPWEnterEmail";
+        }
 
-//    @ExceptionHandler(UserAlreadyExistsException.class)
-//    public ModelAndView handleEmployeeNotFoundException(HttpServletRequest request, Exception ex){
-//
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("exception", ex);
-//        modelAndView.addObject("url", request.getRequestURL());
-//
-//        modelAndView.setViewName("error");
-//        return modelAndView;
-//    };;s..
+        //TODO: Generate token`
+        //TODO:Save token to database
+        //TODO: Send token through email
+
+        return "redirect:/resetPW";
+    }
+
+    @RequestMapping(value = "/reset-pw", method = RequestMethod.GET)
+    public String getResetPW(@ModelAttribute("dto") PWResetDTO dto){
+        return "resetPW";
+    }
+
+    @RequestMapping(value = "/reset-pw", method = RequestMethod.POST)
+    public String postResetPW(@Valid @ModelAttribute("dto") PWResetDTO dto,
+                                   BindingResult result,
+                                   Model model){
+        if (result.hasErrors()) {
+            return "resetPW";
+        }
+        //TODO: validate token
+        //TODO: change password from database
+        //TODO: send email of password change
+        //TODO: Invalidate token
+        return "redirect:/login";
+    }
 
 }
