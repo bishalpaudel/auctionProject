@@ -1,5 +1,7 @@
 package org.auctionproject.web.configuration;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -99,5 +101,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.debug", "true");
         return mailSender;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

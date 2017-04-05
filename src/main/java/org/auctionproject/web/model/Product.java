@@ -1,8 +1,12 @@
 package org.auctionproject.web.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +16,10 @@ import java.util.List;
  */
 @Entity
 public class Product {
+
+    public static final int MIN_LENGTH_TITLE = 2;
+    public static final int MIN_LENGTH_MODEL = 2;
+    public static final int MIN_LENGTH_BRAND = 2;
 
     public enum PRODUCTSTATUS {ACTIVE, SOLD, ARCHIVED}
 
@@ -38,19 +46,22 @@ public class Product {
 
     private Double directBuyPrice;
 
-    @NotEmpty
+    @NotNull
     private Double initialBidAmount;
 
-    @NotEmpty
+    @NotNull
     private Double minBidIncrementAmount;
 
-    @NotEmpty
+    @NotNull
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date auctionStartDate;
 
-    @NotEmpty
+
+    @NotNull
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date auctionEndDate;
 
-    @NotEmpty
+    @NotNull
     private PRODUCTSTATUS status;
 
     @OneToMany
@@ -62,6 +73,21 @@ public class Product {
 
     @ManyToOne
     private User owner;
+
+    @CreationTimestamp
+    private Date createdAt;
+
+
+    @UpdateTimestamp
+    private Date updatedAt;
+
+
+
+
+
+
+
+
 
     public Integer getId() {
         return id;
@@ -174,5 +200,30 @@ public class Product {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "[" +
+                "TITLE:" + title + "\n" +
+                "MODEL:" + model + "\n" +
+                "BRAND:" + brand + "\n" +
+                "CATEGORY:" + category.getName() + "\n" +
+                "DESCRIPTION:" + description + "\n" +
+                "DIRECTBUYPRICE:" + directBuyPrice + "\n" +
+                "INITIALBIDAMOUNT:" + initialBidAmount + "\n" +
+                "MINBIDINCREMENTAMOUNT:" + minBidIncrementAmount + "\n" +
+                "AUCTIONSTARTDATE:" + auctionStartDate + "\n" +
+                "AUCTIONENDDATE:" + auctionEndDate + "\n" +
+                "OWNER:" + owner.getFullName() + "\n" +
+                "STATUS:" + status + "\n]";
     }
 }

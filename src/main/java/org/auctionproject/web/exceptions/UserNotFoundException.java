@@ -1,4 +1,4 @@
-package org.auctionproject.web.Exceptions;
+package org.auctionproject.web.exceptions;
 
 /**
  * Created by bishal on 3/30/17.

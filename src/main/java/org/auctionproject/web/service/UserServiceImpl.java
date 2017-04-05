@@ -21,14 +21,12 @@ import javax.servlet.ServletContext;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
     @Autowired
     ServletContext servletContext;
 
-
-    BCryptPasswordEncoder passwordEncoder;
-
+    private BCryptPasswordEncoder passwordEncoder;
 
 	public UserServiceImpl(BCryptPasswordEncoder passwordEncoder){
 	    this.passwordEncoder = passwordEncoder;
@@ -77,60 +75,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
 	}
 
-//    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     private boolean emailExist(String email) {
         User user = userRepository.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
     }
 
-//
-//	@Override
-//	public Long loginValidation(UserCredential userCredit) {
-//		String userN = userCredit.getUserName();
-//		String userP = userCredit.getPassword();
-//		// System.out.println("user name form form input" + userN);
-//		UserCredential userCredential = getUserByUserName(userN);
-//		// System.out.println("From database" + userCredential.getUserName());
-//		try {
-//			if ((userN != null) && (userCredential.getUserName().equals(userN))
-//					&& (userCredential.getPassword().equals(userP))) {
-//				System.out.println("Login Success");
-//				return userCredential.getId();
-//			}
-//
-//		} catch (NullPointerException exp) {
-//			System.out.println(exp);
-//			System.out.println("username and password not match in catch");
-//			return 0l;
-//		}
-//		return 0l;
-//
-//	}
-//
-//	@Override
-//	public User getIdByUserName(String username) {
-//		 return userRepository.getIdByUserName(username);
-//
-//	}
-//	@Override
-//	public User getUserByUserCredentialUserName(String name) {
-//		// TODO Auto-generated method stub
-//		return userRepository.getUserByUserCredentialUserName(name);
-//	}
-//
-//	@Override
-//	public User getUserByUserCredentialId(long id) {
-//		// TODO Auto-generated method stub
-//
-//		return userRepository.getUserByUserCredentialId(id);
-//	}
 	@Override
     @Transactional(readOnly = true)
     public List<User> findAll() {
-		// TODO Auto-generated method stub
 		return (List<User>)userRepository.findAll();
 	}
 
@@ -140,7 +93,14 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
+    @Transactional(readOnly = true)
     public boolean hasEmail(String email) {
         return userRepository.findByEmail(email) != null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findUserByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 }

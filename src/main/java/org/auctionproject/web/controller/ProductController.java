@@ -2,20 +2,37 @@ package org.auctionproject.web.controller;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.auctionproject.web.dto.ProductDTO;
+import org.auctionproject.web.facade.IAuthFacade;
+import org.auctionproject.web.model.Category;
+import org.auctionproject.web.model.Product;
+import org.auctionproject.web.model.User;
+import org.auctionproject.web.service.CategoryService;
+import org.auctionproject.web.service.ProductService;
+import org.auctionproject.web.service.UserService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Collection;
+import javax.validation.Valid;
+import java.util.HashMap;
 
 /**
  * Created by bishal on 3/27/17.
  */
 @Controller
-@RequestMapping(value = "/products/")
+@RequestMapping(value = "/products")
 @EnableSpringDataWebSupport
 public class ProductController {
     @Autowired
@@ -23,6 +40,18 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private IAuthFacade authFacade;
 
 
     @RequestMapping(value = "/math", method = RequestMethod.GET)
@@ -52,7 +81,28 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create() {
+    public String getCreate(@ModelAttribute("product") ProductDTO product, Model model) {
+        HashMap<Long, String> categories = categoryService.getMapOfIdAndName();
+        model.addAttribute("categories", categories);
         return "create";
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String postCreate(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result, Model model) {
+        productDTO.setStatus(Product.PRODUCTSTATUS.ACTIVE);
+
+        if (result.hasErrors()) {
+            return "create";
+        }
+
+        Product product = modelMapper.map(productDTO, Product.class);
+
+        User user = userService.findUserByUserName(authFacade.getAuthentication().getName());
+        product.setOwner(user);
+        productService.createProduct(product);
+
+        /* TODO: Save Photos for product */
+
+        return "redirect:/";
     }
 }

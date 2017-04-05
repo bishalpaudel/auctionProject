@@ -9,4 +9,6 @@ import org.springframework.data.domain.Pageable;
  */
 public interface ProductService {
     Page<Product> getAllActiveProducts(Pageable pageRequest);
+
+    Product createProduct(Product product);
 }
