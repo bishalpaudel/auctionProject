@@ -12,7 +12,7 @@ public interface UserService {
 
 	User getUserByUserId(Long id);
 
-//	UserCredential getUserByUserName(String userName);
+//	UserCredential findUserByUserName(String userName);
 
 	User addUser(UserDTO newUser, Role role) throws Exception;
 
@@ -24,9 +24,11 @@ public interface UserService {
 
 	List<User> findAll();
 
-	public void delete(long id);
+	void delete(long id);
 
     boolean hasEmail(String email);
+
+    User findUserByUserName(String name);
 
 //	public User getIdByUserName(String username);
 

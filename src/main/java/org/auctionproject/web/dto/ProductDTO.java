@@ -27,8 +27,8 @@ public class ProductDTO {
     private String brand;
 
     /* TODO: validate if category exists in database */
-//    @NotNull
-//    private Category category;
+    @NotNull
+    private Category category;
 
     private String description;
 
@@ -43,11 +43,11 @@ public class ProductDTO {
     private Double minBidIncrementAmount;
 
     @Future
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date auctionStartDate;
 
     @Future
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date auctionEndDate;
 
     private Product.PRODUCTSTATUS status;
@@ -80,13 +80,13 @@ public class ProductDTO {
         this.brand = brand;
     }
 
-//    public Category getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public String getDescription() {
         return description;

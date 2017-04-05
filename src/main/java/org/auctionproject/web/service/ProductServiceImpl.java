@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product createProduct(Product product) {
+        product.setStatus(Product.PRODUCTSTATUS.ACTIVE);
         return productRepository.save(product);
     }
 }

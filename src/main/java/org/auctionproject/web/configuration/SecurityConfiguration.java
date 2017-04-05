@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -37,8 +37,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                   .csrf().csrfTokenRepository(csrfTokenRepository())
                  .and()
                   .authorizeRequests()
-                    .antMatchers("/", "/login").permitAll()
-                    .antMatchers("/my-profile").hasAuthority("USER")
+                    .antMatchers("/",
+                            "/images/**",
+                            "/login",
+                            "/resource/**",
+                            "/register").permitAll()
+                  .antMatchers("/**").authenticated()
+//                  .antMatchers("/my-profile", "/products/create").hasAuthority("USER")
                   .and()
                   .formLogin()
                     .loginPage("/login")
@@ -55,11 +60,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
         auth
                 .jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT userName, password, id FROM users WHERE userName = ?")
+                .usersByUsernameQuery("SELECT userName, password, id FROM User WHERE userName = ?")
                 .authoritiesByUsernameQuery("SELECT u.userName, r.name " +
-                        "FROM users u " +
-                        "INNER JOIN user_role ur ON u.id=ur.user_id " +
-                        "INNER JOIN roles r ON r.id=ur.role_id " +
+                        "FROM User u " +
+                        "INNER JOIN UserRole ur ON u.id=ur.user_id " +
+                        "INNER JOIN Role r ON r.id=ur.role_id " +
                         "WHERE userName = ?");
     }
 

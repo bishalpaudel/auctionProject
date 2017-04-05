@@ -1,6 +1,7 @@
 package org.auctionproject.web.controller;
 
 import org.auctionproject.web.dto.ProductDTO;
+import org.auctionproject.web.facade.IAuthFacade;
 import org.auctionproject.web.model.Category;
 import org.auctionproject.web.model.Product;
 import org.auctionproject.web.model.User;
@@ -14,13 +15,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 
 /**
  * Created by bishal on 3/27/17.
@@ -42,6 +43,9 @@ public class ProductController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private IAuthFacade authFacade;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(Model model, Pageable pageRequest) {
         Page<Product> products = productService.getAllActiveProducts(pageRequest);
@@ -51,7 +55,8 @@ public class ProductController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getCreate(@ModelAttribute("product") ProductDTO product, Model model) {
-        /* TODO: Send all categories */
+        HashMap<Long, String> categories = categoryService.getMapOfIdAndName();
+        model.addAttribute("categories", categories);
         return "create";
     }
 
@@ -63,20 +68,14 @@ public class ProductController {
             return "create";
         }
 
-
         Product product = modelMapper.map(productDTO, Product.class);
-        Category category = categoryService.getById(new Long(1));
-        User user = userService.getUserByUserId(new Long(1));
-        product.setCategory(category);
+
+        User user = userService.findUserByUserName(authFacade.getAuthentication().getName());
         product.setOwner(user);
-//        product.setStatus(Product.PRODUCTSTATUS.ACTIVE);
-        System.out.println("helloooo000000000000000000000000000000000000000000000000000");
         productService.createProduct(product);
 
+        /* TODO: Save Photos for product */
 
-//        System.out.println(product.getAuctionEndDate());
-        /* TODO: Use Model Mapper http://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application */
-        /* TODO: Save data */
-        return "redirect:/home";
+        return "redirect:/";
     }
 }
