@@ -212,8 +212,8 @@
 				</div>
 
 				<div class="form-group">
-					<label for="picture" class="cols-sm-2 control-label"><spring:message
-							code="register.form.profile" /></label>
+					<%--<label class="cols-sm-2 control-label"><spring:message--%>
+							<%--code="register.form.profile" /></label>--%>
 					<div class="cols-md-10">
 						<div class="input-group">
 							<input type="file" name="picture" id="picture" accept="image/*" />

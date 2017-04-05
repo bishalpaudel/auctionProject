@@ -1,10 +1,7 @@
 package org.auctionproject.web.controller;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.auctionproject.web.dto.ProductDTO;
 import org.auctionproject.web.facade.IAuthFacade;
-import org.auctionproject.web.model.Category;
 import org.auctionproject.web.model.Product;
 import org.auctionproject.web.model.User;
 import org.auctionproject.web.service.CategoryService;
@@ -15,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Collection;
 import javax.validation.Valid;
 import java.util.HashMap;
 

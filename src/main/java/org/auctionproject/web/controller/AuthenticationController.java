@@ -1,5 +1,7 @@
 package org.auctionproject.web.controller;
 
+import org.auctionproject.web.dto.PWResetDTO;
+import org.auctionproject.web.dto.PWResetEmailDTO;
 import org.auctionproject.web.dto.UserDTO;
 import org.auctionproject.web.model.User;
 import org.auctionproject.web.service.RoleService;
@@ -11,7 +13,10 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
