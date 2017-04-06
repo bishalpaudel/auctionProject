@@ -1,6 +1,5 @@
 package org.auctionproject.web.service;
 
-import com.google.common.collect.Maps;
 import org.auctionproject.web.model.Category;
 import org.auctionproject.web.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Bishal Paudel on 4/4/17.
@@ -32,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
         System.out.println(categories);
         HashMap<Long, String> mappedCategories = new HashMap<>();
         for(Category category: categories){
-            mappedCategories.put(category.getCategoryId(), category.getName());
+            mappedCategories.put(category.getId(), category.getName());
         }
 
         return mappedCategories;

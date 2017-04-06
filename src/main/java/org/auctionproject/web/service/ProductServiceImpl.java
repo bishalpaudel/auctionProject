@@ -1,6 +1,8 @@
 package org.auctionproject.web.service;
 
+import org.auctionproject.web.dto.ProductDTO;
 import org.auctionproject.web.model.Product;
+import org.auctionproject.web.model.User;
 import org.auctionproject.web.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +20,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Override
     @Transactional(readOnly = true)
     public Page<Product> getAllActiveProducts(Pageable pageRequest) {
         return productRepository.findAll(pageRequest);
@@ -27,5 +28,47 @@ public class ProductServiceImpl implements ProductService {
     public Product createProduct(Product product) {
         product.setStatus(Product.PRODUCTSTATUS.ACTIVE);
         return productRepository.save(product);
+    }
+
+    @Transactional(readOnly = true)
+    public Product findById(Integer productId) {
+        return productRepository.findOne(productId);
+    }
+
+    @Override
+    public void mapDtoIntoModel(ProductDTO productDTO, Product product) {
+        product.setBrand(productDTO.getBrand());
+        product.setTitle(productDTO.getTitle());
+        product.setModel(productDTO.getModel());
+        product.setDescription(productDTO.getDescription());
+        product.setDirectBuyPrice(productDTO.getDirectBuyPrice());
+        product.setInitialBidAmount(productDTO.getInitialBidAmount());
+        product.setMinBidIncrementAmount(productDTO.getMinBidIncrementAmount());
+        product.setAuctionStartDate(productDTO.getAuctionStartDate());
+        product.setAuctionEndDate(productDTO.getAuctionEndDate());
+        product.setCategory(productDTO.getCategory());
+    }
+
+    @Override
+    public void update(Integer productId, ProductDTO productDTO) {
+        Product product = findById(productId);
+        mapDtoIntoModel(productDTO, product);
+        productRepository.save(product);
+    }
+
+    @Override
+    public boolean isOwner(Integer productId, User authenticatedUser) {
+        return findById(productId).getOwner().getId() == authenticatedUser.getId();
+    }
+
+    @Override
+    public void delete(Integer productId) {
+        productRepository.delete(productId);
+    }
+
+    @Override
+    public boolean isDetetable(Integer productId) {
+        /* TODO: Include proper logic such as: [1. Bidding has started], [2. Is Already deleted], etc */
+        return true;
     }
 }

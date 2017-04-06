@@ -3,7 +3,6 @@ package org.auctionproject.web.dto;
 import org.auctionproject.web.model.Category;
 import org.auctionproject.web.model.Product;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMin;
@@ -49,9 +48,6 @@ public class ProductDTO {
     @Future
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date auctionEndDate;
-
-    private Product.PRODUCTSTATUS status;
-
 
 
 
@@ -138,12 +134,19 @@ public class ProductDTO {
         this.auctionEndDate = auctionEndDate;
     }
 
-    public Product.PRODUCTSTATUS getStatus() {
-        return status;
-    }
-
-    public void setStatus(Product.PRODUCTSTATUS status) {
-        this.status = status;
+    @Override
+    public String toString() {
+        return "[" +
+                "TITLE:" + title + "\n" +
+                "MODEL:" + model + "\n" +
+                "BRAND:" + brand + "\n" +
+                "CATEGORY:" + category.getName() + "\n" +
+                "DESCRIPTION:" + description + "\n" +
+                "DIRECTBUYPRICE:" + directBuyPrice + "\n" +
+                "INITIALBIDAMOUNT:" + initialBidAmount + "\n" +
+                "MINBIDINCREMENTAMOUNT:" + minBidIncrementAmount + "\n" +
+                "AUCTIONSTARTDATE:" + auctionStartDate + "\n" +
+                "AUCTIONENDDATE:" + auctionEndDate + "\n]";
     }
 
  }

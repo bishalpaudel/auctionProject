@@ -68,6 +68,12 @@
         <put-attribute name="content"
                        value="/WEB-INF/views/frontend/product/create.jsp" />
     </definition>
+
+    <definition name="accessDenied" extends="frontbase.definition">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="content"
+                       value="/WEB-INF/views/frontend/product/accessDenied.jsp" />
+    </definition>
     <definition name="errorpage.definition"
                 template="/WEB-INF/views/templates/errortemplate.jsp">
         <put-attribute name="title" value=""/>

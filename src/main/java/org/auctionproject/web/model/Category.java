@@ -1,8 +1,8 @@
 package org.auctionproject.web.model;
 
-import javax.persistence.*;
-
 import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 @Entity
 public class Category {
 	@Id
@@ -27,11 +27,11 @@ public class Category {
 		this.parentCategory = parentCategory;
 	}
 
-	public long getCategoryId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setCategoryId(long categoryId) {
+	public void setId(long categoryId) {
 		this.id = categoryId;
 	}
 

@@ -1,5 +1,6 @@
 package org.auctionproject.web.facade;
 
+import org.auctionproject.web.model.User;
 import org.springframework.security.core.Authentication;
 
 /**
@@ -7,4 +8,6 @@ import org.springframework.security.core.Authentication;
  */
 public interface IAuthFacade {
     Authentication getAuthentication();
+
+    User getAuthenticatedUser();
 }

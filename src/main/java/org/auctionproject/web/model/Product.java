@@ -1,12 +1,12 @@
 package org.auctionproject.web.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
  * Created by Bishal Paudel on 3/2/17.
  */
 @Entity
+@DynamicUpdate
 public class Product {
 
     public static final int MIN_LENGTH_TITLE = 2;
@@ -37,7 +38,7 @@ public class Product {
     private String brand;
 
 
-    @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.MERGE)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="category_id")
     private Category category;
 

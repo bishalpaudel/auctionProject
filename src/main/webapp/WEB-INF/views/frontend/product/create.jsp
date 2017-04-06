@@ -21,17 +21,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="category" class="cols-sm-2 control-label"><spring:message
+                    <label class="cols-sm-2 control-label"><spring:message
                             code="productCreate.form.category" /></label>
                     <div class="cols-sm-10">
                         <div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa"
                                                                aria-hidden="true"></i></span>
                             <%-- TODO: Support selection for nested categories --%>
-                            <form:select path="category"
-                                         items="${categories}"
-                                         placeholder="Enter Category"
-                                         class="form-control"/>
+                            <form:select path="category.id" placeholder="Enter Category" class="form-control">
+                                <form:options items="${categories}"/>
+                            </form:select>
                         </div>
                         <form:errors path="category" class="form-error-new" />
                     </div>
