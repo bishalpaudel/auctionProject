@@ -140,7 +140,7 @@ public class ProductDTO {
                 "TITLE:" + title + "\n" +
                 "MODEL:" + model + "\n" +
                 "BRAND:" + brand + "\n" +
-                "CATEGORY:" + category.getName() + "\n" +
+                "CATEGORY:" + category + "\n" +
                 "DESCRIPTION:" + description + "\n" +
                 "DIRECTBUYPRICE:" + directBuyPrice + "\n" +
                 "INITIALBIDAMOUNT:" + initialBidAmount + "\n" +
