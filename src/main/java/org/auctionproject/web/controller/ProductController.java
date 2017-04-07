@@ -38,17 +38,25 @@ public class ProductController {
     public static final String REDIRECT_PREFIX = "redirect:/";
     public static final String REDIRECT_PRODUCT_LISTING = REDIRECT_PREFIX + "products";
 
-    @Autowired
     private ProductService productService;
 
-    @Autowired
     private CategoryService categoryService;
 
-    @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
     private IAuthFacade authFacade;
+
+    @Autowired
+    public ProductController(ProductService productService,
+                      CategoryService categoryService,
+                      ModelMapper modelMapper,
+                      IAuthFacade authFacade){
+        this.productService = productService;
+        this.categoryService = categoryService;
+        this.modelMapper = modelMapper;
+        this.authFacade = authFacade;
+
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(Model model, Pageable pageRequest) {
