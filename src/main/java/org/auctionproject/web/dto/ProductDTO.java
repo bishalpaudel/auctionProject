@@ -1,5 +1,6 @@
 package org.auctionproject.web.dto;
 
+import org.apache.commons.lang3.StringUtils;
 import org.auctionproject.web.model.Category;
 import org.auctionproject.web.model.Product;
 import org.hibernate.validator.constraints.Length;
@@ -9,7 +10,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-
+import java.util.Objects;
 /**
  * Created by Bishal Paudel on 4/4/17.
  */
@@ -149,4 +150,26 @@ public class ProductDTO {
                 "AUCTIONENDDATE:" + auctionEndDate + "\n]";
     }
 
- }
+    public boolean equals(Object obj) {
+//        return Objects.equals(this, obj);
+        if (this == obj)
+            return true;
+        if ((obj == null) || (obj.getClass() != this.getClass()))
+            return false;
+        ProductDTO dto = (ProductDTO) obj;
+
+        /* TODO: Equality check for other parameters */
+
+        return StringUtils.equals(title, dto.getTitle())
+                && StringUtils.equals(model, dto.getModel())
+                && StringUtils.equals(brand, dto.getBrand());
+    }
+
+    public int hashCode() {
+        return Objects.hash(title, brand, model, description, initialBidAmount);
+//        int hash = 7;
+//        hash = 31 * hash + title;
+//        hash = 31 * hash + (null == data ? 0 : data.hashCode());
+//        return hash;
+    }
+}
