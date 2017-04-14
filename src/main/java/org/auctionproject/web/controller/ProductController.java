@@ -1,6 +1,7 @@
 package org.auctionproject.web.controller;
 
 import org.auctionproject.web.dto.ProductDTO;
+import org.auctionproject.web.exceptions.ProductNotFoundException;
 import org.auctionproject.web.facade.IAuthFacade;
 import org.auctionproject.web.model.Product;
 import org.auctionproject.web.model.User;
@@ -105,8 +106,8 @@ public class ProductController {
 
         ProductDTO productDTO  = modelMapper.map(product, ProductDTO.class);
         HashMap<Long, String> categories = categoryService.getMapOfIdAndName();
-        model.addAttribute("categories", categories);
         model.addAttribute("product", productDTO);
+        model.addAttribute("categories", categories);
 
         return PRODUCT_FORM;
     }
@@ -125,7 +126,11 @@ public class ProductController {
             return ACCESS_DENIED;
         }
 
-        productService.update(productId, productDTO);
+        try{
+            productService.update(productId, productDTO);
+        }catch (ProductNotFoundException e){
+            throw e;
+        }
 
         /* TODO: Get localized redirection message */
         redirectAttributes.addFlashAttribute("statusMessage", "Product saved Successfully");
@@ -138,7 +143,7 @@ public class ProductController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteProduct(@PathVariable("id") Integer productId,
                                 RedirectAttributes redirectAttributes){
-
+        /* TODO: Use ACL */
         if( ! productService.isOwner(productId, authFacade.getAuthenticatedUser())){
             return ACCESS_DENIED;
         }

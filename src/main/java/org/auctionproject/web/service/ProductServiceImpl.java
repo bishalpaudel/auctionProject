@@ -1,6 +1,7 @@
 package org.auctionproject.web.service;
 
 import org.auctionproject.web.dto.ProductDTO;
+import org.auctionproject.web.exceptions.ProductNotFoundException;
 import org.auctionproject.web.model.Product;
 import org.auctionproject.web.model.User;
 import org.auctionproject.web.repository.ProductRepository;
@@ -52,13 +53,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(Integer productId, ProductDTO productDTO) {
         Product product = findById(productId);
+        if(product == null){
+            throw new ProductNotFoundException();
+        }
         mapDtoIntoModel(productDTO, product);
         productRepository.save(product);
     }
 
     @Override
     public boolean isOwner(Integer productId, User authenticatedUser) {
-        return findById(productId).getOwner().getId() == authenticatedUser.getId();
+        Product product = findById(productId);
+        if(product == null){
+            throw new ProductNotFoundException();
+        }
+        return product.getOwner().getId() == authenticatedUser.getId();
     }
 
     @Override
